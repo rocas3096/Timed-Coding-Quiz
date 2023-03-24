@@ -30,7 +30,6 @@ function startTimer() {
 
 startButton.addEventListener("click", startGame)
 
-
 var playagainbutton = document.querySelector(".play-again-button");
 
 function resetGame() {
