@@ -112,6 +112,14 @@ function saveUserScore() {
     localStorage.setItem("highScores", JSON.stringify(highScores));
 }
 
+function clearScoreDisplay() {
+    var scores =document.getElementById("user-score")
+    scores.textContent = ""
+}
 
-startButton.addEventListener("click", startGame);
+startButton.addEventListener("click", function(){
+    startGame();
+    clearScoreDisplay();
+});
+
 submitButton.addEventListener("click", saveUserScore); 
