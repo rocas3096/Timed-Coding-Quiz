@@ -1,6 +1,10 @@
 var startButton = document.querySelector(".start-button")
 var timerElement = document.querySelector("#timer-count")
 var userInitialsInput = document.querySelector ("#user-initials-input")
+var highScoresButton = document.getElementById("high-scores-button");
+var highScoresList = document.getElementById("high-scores-list");
+var submitButton = document.querySelector("#submit-button");
+var scores = document.getElementById("scores")
 var index = 0;
 var score = 0;
 var timer;
@@ -88,14 +92,15 @@ function showQuestions() {
 function endQuiz(){
     startButton.disabled = false
     clearInterval(timer);
-    var scores = document.getElementById("scores")
     scores.textContent = "Your final score is " + score + "/5";
+    clearHighScoreList();
 }
 
 function timesUp() {
     startButton.disabled = false;
     var scores = document.getElementById("user-score");
     scores.textContent = "Your final score is " + score + "/5";
+    clearHighScoreList();
 }
 
 function saveUserScore() {
@@ -104,22 +109,48 @@ function saveUserScore() {
         alert("Please type in your initials")
         return;
     }
-    var highScores = {
-        userInitials: userInitialsInput.value,
-        newScore: score
+    var highScores = JSON.parse(localStorage.getItem("highScores")) || [];
+    if (!Array.isArray(highScores)) {
+        highScores = [];
+    }
+    var newScore = {
+        userInitials: userInitials,
+        score: score
     }
     
+    highScores.push(newScore)
     localStorage.setItem("highScores", JSON.stringify(highScores));
 }
 
-function clearScoreDisplay() {
-    var scores =document.getElementById("user-score")
-    scores.textContent = ""
+function viewHighScores () {
+    var highScores = JSON.parse(localStorage.getItem("highScores")) || [];
+    highScoresList.innerHTML = "";
+
+    if (highScores.length === 0) {
+        alert("No high scores found")
+    } else {
+        for (var i = 0; i < highScores.length; i++) {
+            var li2 = document.createElement("li");
+            li2.textContent = highScores[i].userInitials + ": " + highScores[i].score;
+            highScoresList.appendChild(li2)
+        }
+    }
+}
+
+function clearHighScoreList() {
+    highScoresList.innerHTML = "";
 }
 
 startButton.addEventListener("click", function(){
     startGame();
-    clearScoreDisplay();
+    clearHighScoreList();
+    userInitialsInput.value = "";
+    scores.textContent = "";
 });
 
-submitButton.addEventListener("click", saveUserScore); 
+submitButton.addEventListener("click", function() {
+    saveUserScore();
+    clearHighScoreList();
+}); 
+
+highScoresButton.addEventListener("click", viewHighScores)
