@@ -4,7 +4,8 @@ var userInitialsInput = document.querySelector ("#user-initials-input")
 var highScoresButton = document.getElementById("high-scores-button");
 var highScoresList = document.getElementById("high-scores-list");
 var submitButton = document.querySelector("#submit-button");
-var scores = document.getElementById("scores")
+var scores = document.getElementById("scores");
+submitButton.disabled = true;
 var index = 0;
 var score = 0;
 var timer;
@@ -43,6 +44,7 @@ function startGame(){
     score = 0;
     timerCount = 100;
     startButton.disabled = true;
+    submitButton.disabled = true;
     startTimer();
     showQuestions();
 }
@@ -94,6 +96,7 @@ function endQuiz(){
     clearInterval(timer);
     scores.textContent = "Your final score is " + score + "/5";
     clearHighScoreList();
+    submitButton.disabled = false;
 }
 
 function timesUp() {
@@ -101,6 +104,7 @@ function timesUp() {
     var scores = document.getElementById("user-score");
     scores.textContent = "Your final score is " + score + "/5";
     clearHighScoreList();
+    submitButton.disabled = false;
 }
 
 function saveUserScore() {
@@ -117,7 +121,7 @@ function saveUserScore() {
         userInitials: userInitials,
         score: score
     }
-    
+
     highScores.push(newScore)
     localStorage.setItem("highScores", JSON.stringify(highScores));
 }
@@ -129,6 +133,14 @@ function viewHighScores () {
     if (highScores.length === 0) {
         alert("No high scores found")
     } else {
+        //sorts scores in order of descedning value
+        highScores.sort(function(a,b) {
+            return b.score - a.score;
+        });
+
+        //limits high scores to top 10
+        var numToShow = Math.min (highScores.length,10);
+
         for (var i = 0; i < highScores.length; i++) {
             var li2 = document.createElement("li");
             li2.textContent = highScores[i].userInitials + ": " + highScores[i].score;
