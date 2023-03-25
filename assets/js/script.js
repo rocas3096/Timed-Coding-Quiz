@@ -1,5 +1,6 @@
 var startButton = document.querySelector(".start-button")
-var timerElement = document.querySelector(".timer-count")
+var timerElement = document.querySelector("#timer-count")
+var userInitialsInput = document.querySelector ("#user-initials-input")
 var index = 0;
 var score = 0;
 var timer;
@@ -34,7 +35,9 @@ var questions = [
 
 
 function startGame(){
-    timerCount=100
+    index = 0;
+    score = 0;
+    timerCount = 100;
     startButton.disabled = true;
     startTimer();
     showQuestions();
@@ -57,7 +60,7 @@ function showQuestions() {
     var questionanswerchoices = document.getElementById("question-answer-choices");
     questionasked.textContent = currentQuestion.question;
     questionanswerchoices.textContent = ""
-    for (var i = 0; i < currentQuestion.choices.concat.length; i++) {
+    for (var i = 0; i < currentQuestion.choices.length; i++) {
         var li = document.createElement("li");
         var button = document.createElement("button");
         button.textContent = currentQuestion.choices[i];
@@ -71,7 +74,7 @@ function showQuestions() {
             }
             index++;
             if (index >= questions.length) {
-                endQuiz;
+                endQuiz();
             } else {
                 showQuestions();
             }
@@ -82,13 +85,33 @@ function showQuestions() {
 
 }
 
-function timesUp() {
-    fillinlater.textContent = "Time is up, let's see how you did"
-    startButton.disabled = false;
+function endQuiz(){
+    startButton.disabled = false
+    clearInterval(timer);
+    var scores = document.getElementById("scores")
+    scores.textContent = "Your final score is " + score + "/5";
 }
 
-startButton.addEventListener("click", startGame)
+function timesUp() {
+    startButton.disabled = false;
+    var scores = document.getElementById("user-score");
+    scores.textContent = "Your final score is " + score + "/5";
+}
 
-var playagainbutton = document.querySelector(".play-again-button");
+function saveUserScore() {
+    var userInitials = userInitialsInput.value;
+    if (userInitials === "") {
+        alert("Please type in your initials")
+        return;
+    }
+    var highScores = {
+        userInitials: userInitialsInput.value,
+        newScore: score
+    }
+    
+    localStorage.setItem("highScores", JSON.stringify(highScores));
+}
 
-playagainbutton.addEventListener("click", resetGame); 
+
+startButton.addEventListener("click", startGame);
+submitButton.addEventListener("click", saveUserScore); 
