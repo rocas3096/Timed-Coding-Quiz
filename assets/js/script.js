@@ -1,15 +1,22 @@
+//Variables are set up to reference HTML elemetns so their properties can be manipulated within the javascipt 
 var startButton = document.querySelector(".start-button")
 var timerElement = document.querySelector("#timer-count")
+var questionasked = document.getElementById("question-asked")
+var questionanswerchoices = document.getElementById("question-answer-choices");
+var scores = document.getElementById("scores");
 var userInitialsInput = document.querySelector ("#user-initials-input")
 var highScoresButton = document.getElementById("high-scores-button");
 var highScoresList = document.getElementById("high-scores-list");
 var submitButton = document.querySelector("#submit-button");
-var scores = document.getElementById("scores");
+// the submit button is disabled by default so that it can only be turned on after certain conditions are met
 submitButton.disabled = true;
+//the index and score variables are created and set to 0 so that they have a baseline value that can be increased later. Index will be used in reference to question order and score in reference to player score.
 var index = 0;
 var score = 0;
+//the timer and timer count variables are set up to later be referenced in the funtions for setting the countdown time and ending the quiz
 var timer;
 var timerCount;
+//the variable questions holds arrays of questions, answer choices and correct answers for the quiz game
 var questions = [
     {
         question: "commonly used data types do not include which of the following:",
@@ -38,17 +45,20 @@ var questions = [
     }
 ];
 
-
+//function for starting game which starts timer and generates questions
 function startGame(){
     index = 0;
     score = 0;
     timerCount = 60;
+    //disables start button after game begins
     startButton.disabled = true;
+    //disables submit button when game begins
     submitButton.disabled = true;
     startTimer();
     showQuestions();
 }
 
+//function for setting timer and begining its countdown to 0
 function startTimer() {
     timer = setInterval(function (){
         timerCount--;
@@ -60,44 +70,59 @@ function startTimer() {
     }, 1000)
 }
 
+//function for showing questions from question array
 function showQuestions() {
+    //create variables for current question to create text content for questions and answer choices
     var currentQuestion = questions[index];
-    var questionasked = document.getElementById("question-asked")
-    var questionanswerchoices = document.getElementById("question-answer-choices");
     questionasked.textContent = currentQuestion.question;
     questionanswerchoices.textContent = ""
+    //generates buttons for each answer choice to each question
     for (var i = 0; i < currentQuestion.choices.length; i++) {
         var li = document.createElement("li");
         var button = document.createElement("button");
         button.textContent = currentQuestion.choices[i];
+        //stores users answer based off button clicked
         button.setAttribute("user-answer", currentQuestion.choices[i]);
+        //checks users answer when a button is clicked
         button.addEventListener("click", function() {
             var userAnswer = this.getAttribute("user-answer");
+            //Sets condition for correct answer and increases score if that is chosen. Reduces time by 10 seconds if incorrect answer is checked
             if (userAnswer === currentQuestion.answer) {
                 score ++;
             } else {
                 timerCount -= 10;
             }
+            //increases index by 1 so next question can be asked and if the questions have been exhausted the quiz ends
             index++;
+            //sets condition for quiz to end
             if (index >= questions.length) {
+                //calls the endquiz function
                 endQuiz();
             } else {
                 showQuestions();
             }
         });
+        //creates buttons for each list item to be added
         li.appendChild(button);
+        //ties each answer choice to a list item button
         questionanswerchoices.appendChild(li);
     }
 
 }
 
+//function to end quiz
 function endQuiz(){
-    startButton.disabled = false
+    //start button remains disabled so user cannot start quiz until they have submitted score
+    startButton.disabled = true;
     clearInterval(timer);
+    //displays score to user
     scores.textContent = "Your final score is " + score + "/5";
     scores.style.fontSize = "20px";
+    //clears high scores when game ends
     clearHighScoreList();
+    //allows submit button to be used
     submitButton.disabled = false;
+    //hides questions from user
     var questionanswerchoices =document.getElementById("question-answer-choices")
     questionanswerchoices.innerHTML = ""
     var questionasked =document.getElementById("question-asked")
@@ -105,27 +130,33 @@ function endQuiz(){
 }
 
 
-
+//fucntion to save user scores
 function saveUserScore() {
     var userInitials = userInitialsInput.value;
     if (userInitials === "") {
         alert("Please type in your initials")
         return;
     }
+    //draws on array of high scores stored in local memory and if none is found displays an empty array
     var highScores = JSON.parse(localStorage.getItem("highScores")) || [];
     if (!Array.isArray(highScores)) {
         highScores = [];
     }
+    //sets up variable for new score to be saved
     var newScore = {
         userInitials: userInitials,
         score: score
     }
-
+    //pushes new score to high scores array to be saved in local storage
     highScores.push(newScore)
     localStorage.setItem("highScores", JSON.stringify(highScores));
+    //disables submit button after it is used
     submitButton.disabled = true;
+    //enables start button to be used after user submits intials
+    startButton.disabled = false;
 }
 
+//function to view highscores that re pulled from local memory
 function viewHighScores () {
     var highScores = JSON.parse(localStorage.getItem("highScores")) || [];
     highScoresList.innerHTML = "";
@@ -137,10 +168,9 @@ function viewHighScores () {
         highScores.sort(function(a,b) {
             return b.score - a.score;
         });
-
         //limits high scores to top 10
         var numToShow = Math.min (highScores.length,10);
-
+        //creates a list for scores with user intials followed by scores and creates list elements for each one 
         for (var i = 0; i < numToShow; i++) {
             var li2 = document.createElement("li");
             li2.textContent =(i+1) + ". " + highScores[i].userInitials + ": " + highScores[i].score;
@@ -150,10 +180,12 @@ function viewHighScores () {
     }
 }
 
+//clears high scores for various instances
 function clearHighScoreList() {
     highScoresList.innerHTML = "";
 }
 
+//adds event listener to start button so game can begin and certain fields can be cleared
 startButton.addEventListener("click", function(){
     startGame();
     clearHighScoreList();
@@ -161,9 +193,11 @@ startButton.addEventListener("click", function(){
     scores.textContent = "";
 });
 
+//adds event listener to submit button
 submitButton.addEventListener("click", function() {
     saveUserScore();
     clearHighScoreList();
 }); 
 
+//adds event listener to view high scores button
 highScoresButton.addEventListener("click", viewHighScores)
