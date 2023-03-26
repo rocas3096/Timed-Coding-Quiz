@@ -8,20 +8,27 @@
     <link rel="stylesheet" type="text/css" href="./assets/css/style.css" />
     <title>Timed Coding Quiz</title>
 </head>
+
 <body>
 <!--header section contiaing Quiz name and start button -->
     <header>
         <h1>Coding Quiz</h1>
-        <button class="start-button">Start</button>
+        <nav class="navbar">
+            <ul>
+                <li><button id = "Restart"></button>Restart</li>
+                <li><a href="#high-scores">High Scores</a></li>
+            </ul>
+        </nav>
     </header>
 
     <main>
         <!--Section containing timer with intial count displayed -->
         <section>
-            <div id="timer-count"> Time: 60s</div>
+            <button class="start-button">Start</button>
         </section>
         <!--Section containing questions to be asked, multiple choice answers and user score to be displayed after quiz is over -->
         <section>
+            <div id="timer-count"> Time: 60s</div>
             <h2 id ="question-asked"></h2>
             <ul id ="question-answer-choices"></ul>
             <div id="scores"></div>

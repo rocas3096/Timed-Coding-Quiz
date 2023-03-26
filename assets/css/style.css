@@ -16,8 +16,12 @@ body {
 /*sets styling for header*/
 header {
     display: flex;
+    flex-wrap: wrap;
+    top: 0px;
+    left: 0px;
+    width: 100%;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     background-color: aqua;
     color: black;
@@ -27,7 +31,20 @@ header {
 /*sets styling for coding quiz header*/
 h1 {
     font-size: 3rem;
-    margin: 0;
+}
+
+/*(class) sets the styling for nav bar elements*/
+.navbar ul {
+    display: flex;
+    justify-content: space-between;
+    min-width: 300px;
+}
+
+/*(class) sets the styling for nav bar text*/
+nav a {
+    color: var(--white);
+    font-weight: bold;
+    text-decoration: none;
 }
 
 /*default styling for all buttons*/
