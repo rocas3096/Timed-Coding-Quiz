@@ -4,26 +4,31 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--Link to css styling sheet-->
     <link rel="stylesheet" type="text/css" href="./assets/css/style.css" />
     <title>Timed Coding Quiz</title>
 </head>
 <body>
-
+<!--header section contiaing Quiz name and start button -->
     <header>
         <h1>Coding Quiz</h1>
         <button class="start-button">Start</button>
     </header>
 
     <main>
+        <!--Section containing timer with intial count displayed -->
         <section>
             <div id="timer-count"> Time: 60s</div>
         </section>
+        <!--Section containing questions to be asked, multiple choice answers and user score to be displayed after quiz is over -->
         <section>
             <h2 id ="question-asked"></h2>
             <ul id ="question-answer-choices"></ul>
             <div id="scores"></div>
         </section>
+        <!--Line breaks used to seperate user input section from section above -->
         <br><br>
+        <!--Section for user input of initials, submit button for initials and high score viewing. Also beneath this is the display of high scores. -->
         <section>
             <label for = "user-initials-input">Enter your initials:</label>
             <input type = "text" id = "user-initials-input" name = "user-initials-input">
@@ -32,7 +37,7 @@
             <ul id ="high-scores-list"></ul> 
         </section>
     </main>
-
+    <!--Link to javascript sheet -->
     <script src="assets/js/script.js"></script>
 
 </body>

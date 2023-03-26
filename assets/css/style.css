@@ -2,6 +2,7 @@
     box-sizing: border-box;
 }
 
+/*styling for body section of html*/
 body {
     font-family: sans-serif;
     margin: 0;
@@ -9,8 +10,10 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    background-color: #bababa;
 }
 
+/*sets styling for header*/
 header {
     display: flex;
     flex-direction: column;
@@ -21,11 +24,13 @@ header {
     padding: 20px;
 }
 
+/*sets styling for coding quiz header*/
 h1 {
     font-size: 3rem;
     margin: 0;
 }
 
+/*default styling for all buttons*/
 button {
     border-radius: 8px;
     color: black;
@@ -40,6 +45,7 @@ button {
     margin-top: 20px;
 }
 
+/*styling for unordered lists*/
 ul {
     list-style: none;
     margin: 0;
@@ -47,11 +53,26 @@ ul {
     align-items: center;
 }
 
+/*styling for list items of unordered list*/
 li {
     font-size: 8px;
     align-items: center;
 }
 
+/*styling for the text preceeding user input*/
+label {
+    font-size: 20px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+ 
+/*styling for user input text*/
+input[type="text"] {
+    font-size: 1.2rem;
+    padding: 10px;
+}
+
+/*styling for the start button*/
 .start-button { 
     font-size: 16px;
     height: 30px;
@@ -59,30 +80,21 @@ li {
     margin-top: 20px;
 }
 
+/*styling for the timer*/
 #timer-count {
     font-size: 25px;
     display: flex;
     align-items: center;
 }
 
-label {
-    font-size: 20px;
-    font-weight: bold;
-    margin-right: 10px;
-}
- 
-input[type="text"] {
-    font-size: 1.2rem;
-    padding: 10px;
-}
-
-
+/*styling for the submit button*/
 #submit-button {
     font-size: 16px;
     height: 10px;
     line-height: 10px;
 }
 
+/*styling for the high score button*/
 #high-scores-button {
     white-space: nowrap;
     font-size: 14px;
@@ -91,8 +103,8 @@ input[type="text"] {
     line-height:normal; 
 }
 
+/*styling for the high score list*/
 #high-scores-list {
     font-size: 12px;
     margin-top: 20px;
 }
-
