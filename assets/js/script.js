@@ -42,7 +42,7 @@ var questions = [
 function startGame(){
     index = 0;
     score = 0;
-    timerCount = 100;
+    timerCount = 60;
     startButton.disabled = true;
     submitButton.disabled = true;
     startTimer();
@@ -52,10 +52,10 @@ function startGame(){
 function startTimer() {
     timer = setInterval(function (){
         timerCount--;
-        timerElement.textContent = "Time: " +timerCount;
+        timerElement.textContent = "Time: " + timerCount + "s";
         if (timerCount === 0) {
             clearInterval(timer);
-            timesUp();
+            endQuiz();
         }
     }, 1000)
 }
@@ -95,17 +95,16 @@ function endQuiz(){
     startButton.disabled = false
     clearInterval(timer);
     scores.textContent = "Your final score is " + score + "/5";
+    scores.style.fontSize = "20px";
     clearHighScoreList();
     submitButton.disabled = false;
+    var questionanswerchoices =document.getElementById("question-answer-choices")
+    questionanswerchoices.innerHTML = ""
+    var questionasked =document.getElementById("question-asked")
+    questionasked.innerHTML = ""
 }
 
-function timesUp() {
-    startButton.disabled = false;
-    var scores = document.getElementById("user-score");
-    scores.textContent = "Your final score is " + score + "/5";
-    clearHighScoreList();
-    submitButton.disabled = false;
-}
+
 
 function saveUserScore() {
     var userInitials = userInitialsInput.value;
@@ -124,6 +123,7 @@ function saveUserScore() {
 
     highScores.push(newScore)
     localStorage.setItem("highScores", JSON.stringify(highScores));
+    submitButton.disabled = true;
 }
 
 function viewHighScores () {
@@ -141,9 +141,10 @@ function viewHighScores () {
         //limits high scores to top 10
         var numToShow = Math.min (highScores.length,10);
 
-        for (var i = 0; i < highScores.length; i++) {
+        for (var i = 0; i < numToShow; i++) {
             var li2 = document.createElement("li");
-            li2.textContent = highScores[i].userInitials + ": " + highScores[i].score;
+            li2.textContent =(i+1) + ". " + highScores[i].userInitials + ": " + highScores[i].score;
+            li2.style.fontSize = "20px";
             highScoresList.appendChild(li2)
         }
     }
