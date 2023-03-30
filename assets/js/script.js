@@ -1,4 +1,8 @@
 //Variables are set up to reference HTML elemetns so their properties can be manipulated within the javascipt 
+var titleBox = document.querySelector(".Title-Box");
+var questionBox = document.querySelector(".Question-box");
+var scoreBox = document.querySelector(".Score-box");
+var highScoreBox = document.querySelector(".High-Score-box");
 var startButton = document.querySelector(".start-button")
 var timerElement = document.querySelector("#timer-count")
 var questionasked = document.getElementById("question-asked")
@@ -8,8 +12,11 @@ var userInitialsInput = document.querySelector ("#user-initials-input")
 var highScoresButton = document.getElementById("high-scores-button");
 var highScoresList = document.getElementById("high-scores-list");
 var submitButton = document.querySelector("#submit-button");
-// the submit button is disabled by default so that it can only be turned on after certain conditions are met
+var playAgainButton = document.querySelector("#play-again-button");
+// the button conditions are set to be manipulated later on
 submitButton.disabled = true;
+playAgainButton.disabled = false;
+highScoresButton.disabled = false;
 //the index and score variables are created and set to 0 so that they have a baseline value that can be increased later. Index will be used in reference to question order and score in reference to player score.
 var index = 0;
 var score = 0;
@@ -19,7 +26,7 @@ var timerCount;
 //the variable questions holds arrays of questions, answer choices and correct answers for the quiz game
 var questions = [
     {
-        question: "commonly used data types do not include which of the following:",
+        question: "Commonly used data types do not include which of the following:",
         choices: ["strings", "booleans", "alerts", "numbers"],
         answer: "alerts"
     },
@@ -50,12 +57,18 @@ function startGame(){
     index = 0;
     score = 0;
     timerCount = 60;
-    //disables start button after game begins
+    //disables buttons after game begins
     startButton.disabled = true;
-    //disables submit button when game begins
     submitButton.disabled = true;
+    playAgainButton.disabled = true;
+    highScoresButton.disabled = true;
     startTimer();
     showQuestions();
+    //hides everything but question box when quiz begins
+    titleBox.classList.add("hidden");
+    questionBox.classList.remove("hidden");
+    scoreBox.classList.add("hidden");
+    highScoreBox.classList.add("hidden");
 }
 
 //function for setting timer and begining its countdown to 0
@@ -63,7 +76,7 @@ function startTimer() {
     timer = setInterval(function (){
         timerCount--;
         timerElement.textContent = "Time: " + timerCount + "s";
-        if (timerCount === 0) {
+        if (timerCount === 0 || timerCount < 0) {
             clearInterval(timer);
             endQuiz();
         }
@@ -117,6 +130,7 @@ function endQuiz(){
     clearInterval(timer);
     //displays score to user
     scores.textContent = "Your final score is " + score + "/5";
+    scores.style.marginBottom = "20px";
     scores.style.fontSize = "20px";
     //clears high scores when game ends
     clearHighScoreList();
@@ -127,6 +141,11 @@ function endQuiz(){
     questionanswerchoices.innerHTML = ""
     var questionasked =document.getElementById("question-asked")
     questionasked.innerHTML = ""
+    //hides everything but score box at end of quiz
+    titleBox.classList.add("hidden");
+    questionBox.classList.add("hidden");
+    scoreBox.classList.remove("hidden");
+    highScoreBox.classList.add("hidden");
 }
 
 
@@ -152,8 +171,15 @@ function saveUserScore() {
     localStorage.setItem("highScores", JSON.stringify(highScores));
     //disables submit button after it is used
     submitButton.disabled = true;
-    //enables start button to be used after user submits intials
+    //enables other buttons to be used after user submits intials
     startButton.disabled = false;
+    playAgainButton.disabled = false;
+    highScoresButton.disabled = false;
+    //shows high score box and hides others
+    titleBox.classList.add("hidden");
+    questionBox.classList.add("hidden");
+    scoreBox.classList.add("hidden");
+    highScoreBox.classList.remove("hidden");
 }
 
 //function to view highscores that re pulled from local memory
@@ -196,8 +222,24 @@ startButton.addEventListener("click", function(){
 //adds event listener to submit button
 submitButton.addEventListener("click", function() {
     saveUserScore();
-    clearHighScoreList();
+    viewHighScores();
 }); 
 
 //adds event listener to view high scores button
-highScoresButton.addEventListener("click", viewHighScores)
+highScoresButton.addEventListener("click", function() {
+    viewHighScores();
+    //hides everything but high score box
+    titleBox.classList.add("hidden");
+    questionBox.classList.add("hidden");
+    scoreBox.classList.add("hidden");
+    highScoreBox.classList.remove("hidden");
+})
+
+playAgainButton.addEventListener("click", function() {
+    //hides everything but title box
+    titleBox.classList.remove("hidden");
+    questionBox.classList.add("hidden");
+    scoreBox.classList.add("hidden");
+    highScoreBox.classList.add("hidden");
+})
+
