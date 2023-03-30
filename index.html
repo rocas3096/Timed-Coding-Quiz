@@ -15,33 +15,45 @@
         <h1>Coding Quiz</h1>
         <nav class="navbar">
             <ul>
-                <li><button id = "Restart"></button>Restart</li>
-                <li><a href="#high-scores">High Scores</a></li>
+                <li><button id="play-again-button">Play Again</button></li>
+                <li><button id="high-scores-button">View High Scores</button></li>
             </ul>
         </nav>
     </header>
 
     <main>
-        <!--Section containing timer with intial count displayed -->
-        <section>
+        <!-- Section containing the intial greeting and start button -->
+        <section class="Title-Box">
+            <h2 class ="title">Welcome</h2>
+            <p id ="greeting">Hello and welcome to my quiz game. Before you begin, let's explain the rules.</p>
+            <ul>
+                <li id = "first">1. You will have 60 seconds to complete this quiz. Once the time expires, your quiz will end.</li>
+                <li id = "second">2. Everytime you get a question wrong your time left will decrease by 10 seconds and I'll feel shame for you in some corner of the world.</li>
+                <li id = "third">3. Everytime you get a question right your score increases by 1. There is no score penalty for wrong answers, just the feeling of disappointing your parents.</li>
+            </ul>
+            <p id="joke"> With these rules in mind, press start whenever you're ready and lets get ready to suffer together :D</p>
+            
             <button class="start-button">Start</button>
         </section>
-        <!--Section containing questions to be asked, multiple choice answers and user score to be displayed after quiz is over -->
-        <section>
+        <!-- Section containing questions to be asked, multiple choice answers -->
+        <section class="Question-box hidden">
+            <h2 class ="title">Quiz</h2>
             <div id="timer-count"> Time: 60s</div>
             <h2 id ="question-asked"></h2>
             <ul id ="question-answer-choices"></ul>
-            <div id="scores"></div>
         </section>
-        <!--Line breaks used to seperate user input section from section above -->
-        <br><br>
-        <!--Section for user input of initials, submit button for initials and high score viewing. Also beneath this is the display of high scores. -->
-        <section>
+        <!--Section for user input of initials, submit button for initials -->
+        <section class="Score-box hidden">
+            <h2 class ="title">Scores</h2>
+            <div id="scores"></div>
             <label for = "user-initials-input">Enter your initials:</label>
             <input type = "text" id = "user-initials-input" name = "user-initials-input">
-            <button id="submit-button">Submit Score</button> 
-            <button id="high-scores-button">View High Scores</button>
-            <ul id ="high-scores-list"></ul> 
+            <button id="submit-button">Submit Score</button>  
+        </section>
+        <!-- Section for viewing high scores -->
+        <section class="High-Score-box hidden">
+            <h2 class ="title">High Scores</h2>
+            <ul id ="high-scores-list"></ul>
         </section>
     </main>
     <!--Link to javascript sheet -->

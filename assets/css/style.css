@@ -4,11 +4,11 @@
 
 /*styling for body section of html*/
 body {
+    display: flex;
+    flex-direction: column;
     font-family: sans-serif;
     margin: 0;
     padding: 0;
-    display: flex;
-    flex-direction: column;
     min-height: 100vh;
     background-color: #bababa;
 }
@@ -89,12 +89,103 @@ input[type="text"] {
     padding: 10px;
 }
 
+/*sets styling to hide boxes*/
+.hidden {
+    display: none !important;
+}
+
+/*Styling to make the title section a box*/
+.Title-Box, .Question-box, .Score-box, .High-Score-box {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: fit-content;
+    margin: 20px auto;
+    padding: 20px;
+    border-style: solid;
+    border-width: 2px;
+}
+
 /*styling for the start button*/
 .start-button { 
     font-size: 16px;
     height: 30px;
     line-height: 8px;
     margin-top: 20px;
+}
+
+/*styling for question box title*/
+.Question-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+} 
+
+/*styling for question box timer*/
+.Question-box div {
+    display: block;
+}
+
+/* styling for questions asked */
+.Question-box h2 {
+    display: block;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+/* styling for score box title */
+.Score-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+} 
+
+/* styling for text preceeding user input in score box */
+.Score-box label {
+    display: block;
+}
+
+/* styling for user input in score box */
+.Score-box input {
+    display: block;
+    
+}
+
+/* styling for submit button in score box */
+.Score-box button {
+    display: block;
+}
+
+/*(class) sets the rules for stlying the header text of each section within container*/
+.title {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 0;
+    top: -40px;
+    width: 95%;
+    margin-left: 3%;
+    border-style: solid;
+    border-color: var(--black);
+    padding: 5px;
+    border-radius: 10px;
+    font-size: 200%;
+    font-weight: bolder;
+    color: black;
+    background-color: white;
+}
+
+/*styles the writing in the title box*/
+#greeting, #first, #second, #third, #joke {
+    font-size: 24px;
 }
 
 /*styling for the timer*/
@@ -111,8 +202,26 @@ input[type="text"] {
     line-height: 10px;
 }
 
+/*styling for the play again button*/
+#play-again-button {
+    white-space: nowrap;
+    font-size: 14px;
+    height: 20px;
+    margin-top: 0;
+    line-height:normal; 
+}
+
 /*styling for the high score button*/
 #high-scores-button {
+    white-space: nowrap;
+    font-size: 14px;
+    height: 20px;
+    margin-top: 0;
+    line-height:normal; 
+}
+
+/*styling for hide high score button*/
+#hide-high-scores-button {
     white-space: nowrap;
     font-size: 14px;
     height: 20px;
