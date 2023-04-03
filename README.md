@@ -14,7 +14,7 @@ To find this website, use this link. https://rocas3096.github.io/Timed-Coding-Qu
 
 To review this repository, use this link. https://github.com/rocas3096/Timed-Coding-Quiz
 
-![alt text](assets/images/screenshot.png)
+![Coding Quiz functionality displayed in Video Form](assets/videos/Timed-Coding-Quiz.gif)
 
 ## Credits
 
